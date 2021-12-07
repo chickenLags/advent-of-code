@@ -26,9 +26,7 @@ class Grid {
             this.grid[x][y] += 1;
         }
         catch (e) {
-            console.log(`width: ${this.width}, height: ${this.height}`);
-            throw new Error(`failed incrementing grid at (${x}, ${y}).`);
-            // throw new Error(e);
+            throw new Error(`failed incrementing grid at (${x}, ${y}). Grid has dimensions width: ${this.width} and height: ${this.height}`);
         }
     }
     getIntersections() {

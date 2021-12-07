@@ -74,6 +74,12 @@ async function dayFive_vents(){
     rules.push(new ImageRule(vents.grid.isSegment, Color.WHITE));
 
     gridToImage('vents', vents.grid, rules);
+
+    // 21908 - too high
+    // 10368 - too low
+    // 21350 - too low
+    // 21373 - 
+
 }
 
 

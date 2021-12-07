@@ -1,5 +1,5 @@
 import {myParseInt} from "./helpers/my-parse-int";
-import {Segment} from "./classes/vector";
+import {Segment} from "./classes/segment";
 import {Grid} from "./classes/grid";
 import {Coordinate} from "./classes/coordinate";
 

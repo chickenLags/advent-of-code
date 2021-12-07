@@ -54,6 +54,9 @@ async function dayFive_vents() {
     let rules = [];
     rules.push(new grid_to_image_1.ImageRule(vents.grid.isIntersection, color_1.Color.GREEN));
     rules.push(new grid_to_image_1.ImageRule(vents.grid.isSegment, color_1.Color.WHITE));
-    (0, grid_to_image_1.gridToImage)('vents-test', vents.grid, rules);
+    (0, grid_to_image_1.gridToImage)('vents', vents.grid, rules);
+    // 21908 - too high
+    // 10368 - too low
+    // 21350 - too low
 }
 run();

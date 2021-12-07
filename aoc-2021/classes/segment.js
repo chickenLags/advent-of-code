@@ -36,6 +36,21 @@ class Segment {
                 points.push(new coordinate_1.Coordinate(x, this.start.y));
             }
         }
+        let diagonal = !this.isHorizontal() && !this.isVertical();
+        if (diagonal) {
+            let [hStart, hEnd] = [this.start, this.end].sort(coordinate_1.Coordinate.horizontalAscSort);
+            // let [vStart, vEnd] = [this.start, this.end].sort(Coordinate.verticalAscSort);
+            // let isVerticalAscending = hStart.y <= hStart.y;
+            let verticalDelta = hEnd.y - hStart.y;
+            let verticalIncrements = Math.max(-1, Math.min(verticalDelta, 1));
+            let x = hStart.x;
+            let y = hStart.y;
+            while (x < hEnd.x + 1) {
+                points.push(new coordinate_1.Coordinate(x, y));
+                x++;
+                y += verticalIncrements;
+            }
+        }
         return points;
     }
 }

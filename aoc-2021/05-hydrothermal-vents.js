@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.HydrothermalVents = void 0;
 const my_parse_int_1 = require("./helpers/my-parse-int");
-const vector_1 = require("./classes/vector");
+const segment_1 = require("./classes/segment");
 const grid_1 = require("./classes/grid");
 class HydrothermalVents {
     constructor(input) {
@@ -40,7 +40,7 @@ class HydrothermalVents {
     }
     initializeLineSegments() {
         for (let vectorString of this.raw) {
-            this.lineSegments.push(vector_1.Segment.FromString(vectorString));
+            this.lineSegments.push(segment_1.Segment.FromString(vectorString));
         }
     }
     getHighestXCoord() {

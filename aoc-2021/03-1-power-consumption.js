@@ -57,7 +57,7 @@ class PowerConsumption {
                 mostCommon = 1;
             }
             data = data.filter((binary) => parseInt(binary.charAt(i)) == mostCommon);
-            console.log(data, i, mostCommon);
+            // console.log(data, i, mostCommon);
         }
         return parseInt(data[0], 2);
     }

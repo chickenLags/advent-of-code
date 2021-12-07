@@ -1,4 +1,3 @@
-
 import {config} from 'dotenv';
 config();
 
@@ -6,9 +5,13 @@ import {mapToInt, inputGetter} from "./helpers/input-getter";
 import {DepthIncrementCounter} from "./01-1-sonar-depth-increments";
 import {ShipNavigation} from "./02-2-navigation";
 import {PowerConsumption} from "./03-1-power-consumption";
-import {myParseInt} from "./helpers/my-parse-int";
-import {BingoCard} from "./Bingo/bingo-card";
 import {BingoWithOctopus} from "./04-1-bingo-with-octopus";
+import {myParseInt} from "./helpers/my-parse-int";
+import {HydrothermalVents} from "./05-hydrothermal-vents";
+import Jimp from 'jimp'
+import {Color} from "./enum/color";
+import {gridToImage, ImageRule} from "./helpers/grid-to-image";
+import {Coordinate} from "./classes/coordinate";
 
 
 
@@ -16,8 +19,8 @@ const run = async () => {
     // await DayOne_depthCalculations();
     // await  DayTwo_navigations;
     // await dayThree_powerConsumption();
-    await dayFour_Bingo();
-
+    // await dayFour_Bingo();
+    await dayFive_vents();
 }
 
 async function DayOne_depthCalculations() {
@@ -57,6 +60,20 @@ async function dayFour_Bingo() {
     const bingoWithOctopus: BingoWithOctopus = new BingoWithOctopus(inputData);
     bingoWithOctopus.getFirstBingo()?.getTotalScore();
     bingoWithOctopus.getLastBingo()?.getTotalScore();
+}
+
+async function dayFive_vents(){
+    const inputUrl = "https://adventofcode.com/2021/day/5/input";
+    const input: string[] = await inputGetter(inputUrl);
+
+    const vents: HydrothermalVents = new HydrothermalVents(input);
+    vents.run();
+
+    let rules = [];
+    rules.push(new ImageRule(vents.grid.isIntersection, Color.GREEN));
+    rules.push(new ImageRule(vents.grid.isSegment, Color.WHITE));
+
+    gridToImage('vents', vents.grid, rules);
 }
 
 

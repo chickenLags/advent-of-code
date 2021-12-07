@@ -7,7 +7,8 @@ class BingoWithOctopus {
     constructor(input) {
         this.callableBingoNumbers = [];
         this.bingoCards = [];
-        this.hasRun = false;
+        this.hasRan = false;
+        this.BINGO_NUMBER_COUNT = 5 * 5;
         this.originalData = input;
         this.callableBingoNumbers = this.getBingoNumbers();
         this.bingoCards = this.getBingoCards();
@@ -18,42 +19,47 @@ class BingoWithOctopus {
         return bingoNumbersString.split(',').map(my_parse_int_1.myParseInt);
     }
     getBingoCards() {
-        // Extracting the bingo cards (array of length 25)
+        // Arrange raw data to number[] for further processing...
         let data = this.originalData.join();
         data = data.replaceAll(',', ' ');
         data = data.replaceAll(/ +/ig, ' ');
         const dataArray = data.split(' ');
         // remove starting whitespace
         dataArray.shift();
-        // construct bingo cards
-        const bingoNumberCount = 5 * 5;
+        /*
+        * Construct bingo cards by batching the numbers out of the raw data
+        *  and into the bingo cart constructor.
+        * */
         let dataLength = dataArray.length;
         let cards = [];
-        for (let i = 0; i < dataLength; i += bingoNumberCount) {
-            let cardData = dataArray.slice(i, i + bingoNumberCount);
+        for (let i = 0; i < dataLength; i += this.BINGO_NUMBER_COUNT) {
+            let cardData = dataArray.slice(i, i + this.BINGO_NUMBER_COUNT);
             cards.push(new bingo_card_1.BingoCard(cardData));
         }
         return cards;
     }
-    findFirstBingo() {
+    getFirstBingo() {
         return this.firstBingo;
     }
-    findLastBingo() {
+    getLastBingo() {
         return this.lastBingo;
     }
     run() {
-        if (this.hasRun) {
+        if (this.hasRan) {
             return;
         }
         for (let currentNumber of this.callableBingoNumbers) {
             if (!this.firstBingo) {
                 this.firstBingo = this.bingoCards.find(card => card.checkBingo(currentNumber));
             }
-            if (this.bingoCards.length === 1) {
+            if (this.isLastBingoCard()) {
                 this.lastBingo = this.bingoCards.find(card => card.checkBingo(currentNumber));
             }
             this.bingoCards = this.bingoCards.filter(card => !card.checkBingo(currentNumber));
         }
+    }
+    isLastBingoCard() {
+        return this.bingoCards.length === 1;
     }
 }
 exports.BingoWithOctopus = BingoWithOctopus;

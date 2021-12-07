@@ -7,11 +7,15 @@ const _01_1_sonar_depth_increments_1 = require("./01-1-sonar-depth-increments");
 const _02_2_navigation_1 = require("./02-2-navigation");
 const _03_1_power_consumption_1 = require("./03-1-power-consumption");
 const _04_1_bingo_with_octopus_1 = require("./04-1-bingo-with-octopus");
+const _05_hydrothermal_vents_1 = require("./05-hydrothermal-vents");
+const color_1 = require("./enum/color");
+const grid_to_image_1 = require("./helpers/grid-to-image");
 const run = async () => {
     // await DayOne_depthCalculations();
     // await  DayTwo_navigations;
     // await dayThree_powerConsumption();
-    await dayFour_Bingo();
+    // await dayFour_Bingo();
+    await dayFive_vents();
 };
 async function DayOne_depthCalculations() {
     const inputDay1aUrl = "https://adventofcode.com/2021/day/1/input";
@@ -39,57 +43,17 @@ async function dayFour_Bingo() {
     const inputurl = "https://adventofcode.com/2021/day/4/input";
     const inputData = await (0, input_getter_1.inputGetter)(inputurl);
     const bingoWithOctopus = new _04_1_bingo_with_octopus_1.BingoWithOctopus(inputData);
-    bingoWithOctopus.findFirstBingo()?.getTotalScore();
-    bingoWithOctopus.findLastBingo()?.getTotalScore();
-    // // Extracting the bingoNumbers (the onces that are called)
-    // const bingoNumbersString: string = inputData.shift() || '';
-    // const bingoNumbers: number[] = bingoNumbersString.split(',').map(myParseInt);
-    // // Extracting the bingo cards (array of length 25)
-    // let data: string = inputData.join();
-    // data = data.replaceAll(',', ' ');
-    // data = data.replaceAll(/ +/ig, ' ');
-    // const dataArray: string[] = data.split(' ');
-    //
-    //
-    // // remove starting whitespace
-    // dataArray.shift();
-    //
-    // // construct bingo cards
-    // const bingoNumberCount = 5 * 5;
-    // let dataLength: number = dataArray.length;
-    //
-    // let cards: BingoCard[] = [];
-    // for (let i = 0 ; i < dataLength; i += bingoNumberCount) {
-    //     let cardData = dataArray.slice(i, i + bingoNumberCount);
-    //     cards.push(new BingoCard(cardData));
-    // }
-    // let firstBingo: boolean = false;
-    //
-    //
-    // // call numbers one by one and check for bingo's
-    // for (let currentNumber of bingoNumbers) {
-    //
-    //     if (!firstBingo) {
-    //         let firstCard: BingoCard | undefined = cards.find(card => card.checkBingo(currentNumber))
-    //         if (firstCard) {
-    //             console.log(`The first card to bingo is:`)
-    //             // console.log(firstCard);
-    //             firstCard.getTotalScore()
-    //         }
-    //     }
-    //
-    //     if (cards.length === 1) {
-    //         let lastCard: BingoCard | undefined = cards.find(card => card.checkBingo(currentNumber))
-    //         if (lastCard) {
-    //             console.log(`The last card to bingo is:`)
-    //             // console.log(lastCard);
-    //             lastCard.getTotalScore()
-    //         }
-    //     }
-    //
-    //     cards = cards.filter( card => !card.checkBingo(currentNumber));
-    //
-    //     // cards.forEach(card => card.checkBingo(currentNumber));
-    // }
+    bingoWithOctopus.getFirstBingo()?.getTotalScore();
+    bingoWithOctopus.getLastBingo()?.getTotalScore();
+}
+async function dayFive_vents() {
+    const inputUrl = "https://adventofcode.com/2021/day/5/input";
+    const input = await (0, input_getter_1.inputGetter)(inputUrl);
+    const vents = new _05_hydrothermal_vents_1.HydrothermalVents(input);
+    vents.run();
+    let rules = [];
+    rules.push(new grid_to_image_1.ImageRule(vents.grid.isIntersection, color_1.Color.GREEN));
+    rules.push(new grid_to_image_1.ImageRule(vents.grid.isSegment, color_1.Color.WHITE));
+    (0, grid_to_image_1.gridToImage)('vents-test', vents.grid, rules);
 }
 run();

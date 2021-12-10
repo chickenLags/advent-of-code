@@ -11,9 +11,13 @@ async function inputGetter(inputUrl: string): Promise<string[]> {
     return dataWithoutEmpty;
 }
 
+function splitString(input: string, seperator: string = ',') {
+    return input.split(seperator);
+}
+
 function mapToInt(input: string[]): number[] {
     return input.map(i => parseInt(i, 10))
 }
 
 
-export {inputGetter, mapToInt};
+export {inputGetter, mapToInt, splitString};

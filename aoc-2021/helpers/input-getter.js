@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.mapToInt = exports.inputGetter = void 0;
+exports.splitString = exports.mapToInt = exports.inputGetter = void 0;
 const axios_1 = __importDefault(require("axios"));
 async function inputGetter(inputUrl) {
     const responseData = await axios_1.default.get(inputUrl, { headers: {
@@ -14,6 +14,10 @@ async function inputGetter(inputUrl) {
     return dataWithoutEmpty;
 }
 exports.inputGetter = inputGetter;
+function splitString(input, seperator = ',') {
+    return input.split(seperator);
+}
+exports.splitString = splitString;
 function mapToInt(input) {
     return input.map(i => parseInt(i, 10));
 }

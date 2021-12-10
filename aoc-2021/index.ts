@@ -1,18 +1,16 @@
 import {config} from 'dotenv';
-config();
-
-import {mapToInt, inputGetter} from "./helpers/input-getter";
+import {inputGetter, mapToInt, splitString} from "./helpers/input-getter";
 import {DepthIncrementCounter} from "./01-1-sonar-depth-increments";
 import {ShipNavigation} from "./02-2-navigation";
 import {PowerConsumption} from "./03-1-power-consumption";
 import {BingoWithOctopus} from "./04-1-bingo-with-octopus";
-import {myParseInt} from "./helpers/my-parse-int";
 import {HydrothermalVents} from "./05-hydrothermal-vents";
-import Jimp from 'jimp'
 import {Color} from "./enum/color";
 import {gridToImage, ImageRule} from "./helpers/grid-to-image";
-import {Coordinate} from "./classes/coordinate";
+import {LanternFish} from "./classes/lanten-fish";
+import {FishMethod, LanterFishExcersise} from "./06-lanternfish";
 
+config();
 
 
 const run = async () => {
@@ -20,7 +18,8 @@ const run = async () => {
     // await  DayTwo_navigations;
     // await dayThree_powerConsumption();
     // await dayFour_Bingo();
-    await dayFive_vents();
+    // await dayFive_vents();
+    await daySix_lanternFish();
 }
 
 async function DayOne_depthCalculations() {
@@ -78,10 +77,27 @@ async function dayFive_vents(){
     // 21908 - too high
     // 10368 - too low
     // 21350 - too low
-    // 21373 - 
+    // 21373 - correcto
 
 }
 
+
+async function daySix_lanternFish() {
+    const inputUrl = "https://adventofcode.com/2021/day/6/input";
+    let dataStringed: string[] = await inputGetter(inputUrl);
+    dataStringed = splitString(dataStringed[0]);
+
+    const lanternFishBirthCountdowns: number[] = mapToInt(dataStringed);
+
+    let lanternFishes: LanternFish[] = lanternFishBirthCountdowns.map(birthCountdown => new LanternFish(birthCountdown));
+
+    let lanternFishExcersise: LanterFishExcersise = new LanterFishExcersise(lanternFishBirthCountdowns);
+    lanternFishExcersise.run(80, FishMethod.OOP);
+    lanternFishExcersise.printStatus();
+
+    lanternFishExcersise.run(256, FishMethod.DICT);
+    lanternFishExcersise.printStatus();
+}
 
 
 

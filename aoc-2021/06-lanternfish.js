@@ -77,9 +77,9 @@ class LanterFishExcersise {
     }
     printStatus() {
         if (this.method === FishMethod.OOP)
-            console.log(`After ${this.iterations + 1} iterations - population amounts to: ${this.lanternFishes.length}`);
+            console.log(`After ${this.iterations} iterations - population amounts to: ${this.lanternFishes.length}`);
         if (this.method === FishMethod.DICT)
-            console.log(`After ${this.iterations + 1} iterations - population amounts to: ${this.sumFishDict()}`);
+            console.log(`After ${this.iterations} iterations - population amounts to: ${this.sumFishDict()}`);
     }
 }
 exports.LanterFishExcersise = LanterFishExcersise;

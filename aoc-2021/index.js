@@ -11,6 +11,8 @@ const color_1 = require("./enum/color");
 const grid_to_image_1 = require("./helpers/grid-to-image");
 const lanten_fish_1 = require("./classes/lanten-fish");
 const _06_lanternfish_1 = require("./06-lanternfish");
+const crabmarine_swarm_1 = require("./classes/crabmarine-swarm");
+const signals_and_digits_1 = require("./classes/signals-and-digits");
 (0, dotenv_1.config)();
 const run = async () => {
     // await DayOne_depthCalculations();
@@ -18,7 +20,9 @@ const run = async () => {
     // await dayThree_powerConsumption();
     // await dayFour_Bingo();
     // await dayFive_vents();
-    await daySix_lanternFish();
+    // await daySix_lanternFish();
+    // await daySeven_crabRescue();
+    await dayEight_chaoticDisplay();
 };
 async function DayOne_depthCalculations() {
     const inputDay1aUrl = "https://adventofcode.com/2021/day/1/input";
@@ -58,44 +62,33 @@ async function dayFive_vents() {
     rules.push(new grid_to_image_1.ImageRule(vents.grid.isIntersection, color_1.Color.GREEN));
     rules.push(new grid_to_image_1.ImageRule(vents.grid.isSegment, color_1.Color.WHITE));
     (0, grid_to_image_1.gridToImage)('vents', vents.grid, rules);
-    // 21908 - too high
-    // 10368 - too low
-    // 21350 - too low
-    // 21373 - correcto
 }
 async function daySix_lanternFish() {
     const inputUrl = "https://adventofcode.com/2021/day/6/input";
-    let dataStringed = await (0, input_getter_1.inputGetter)(inputUrl);
-    dataStringed = (0, input_getter_1.splitString)(dataStringed[0]);
-    const lanternFishBirthCountdowns = (0, input_getter_1.mapToInt)(dataStringed);
+    const lanternFishBirthCountdowns = await (0, input_getter_1.numberInputGetter)(inputUrl);
     let lanternFishes = lanternFishBirthCountdowns.map(birthCountdown => new lanten_fish_1.LanternFish(birthCountdown));
     let lanternFishExcersise = new _06_lanternfish_1.LanterFishExcersise(lanternFishBirthCountdowns);
     lanternFishExcersise.run(80, _06_lanternfish_1.FishMethod.OOP);
     lanternFishExcersise.printStatus();
     lanternFishExcersise.run(256, _06_lanternfish_1.FishMethod.DICT);
     lanternFishExcersise.printStatus();
-    // PART TWO - 256 iterations
-    // @ts-ignore
-    // lanternFishBirthCountdowns.forEach(tillBirth => fishDict[tillBirth]++);
-    //
-    // for (let iteration = 0; iteration < iterations; iteration++) {
-    //     let temp = 0;
-    //     for(let birthCountdown = 0; birthCountdown <=8; birthCountdown++) {
-    //         if (birthCountdown === 0) {
-    //             fishDict.temp = fishDict[birthCountdown];
-    //             continue;
-    //         }
-    //
-    //         // @ts-ignore
-    //         fishDict[birthCountdown - 1] = fishDict[birthCountdown];
-    //     }
-    //
-    //     fishDict[6] += fishDict.temp;
-    //     fishDict[8] = fishDict.temp;
-    //
-    //
-    //     console.log(`${sumFishDict(fishDict)} fishes after ${iteration +1} days`);
-    // computer says: 1650309278600 - thats right :)
-    // }
+}
+async function daySeven_crabRescue() {
+    const inputUrl = "https://adventofcode.com/2021/day/7/input";
+    let crabPositions = await (0, input_getter_1.numberInputGetter)(inputUrl);
+    const crabmarineSwarm = new crabmarine_swarm_1.CrabmarineSwarm(crabPositions);
+    let mostFuelEfficientPosition = crabmarineSwarm.getMostFuelEfficientPosition();
+    let requiredFuel = crabmarineSwarm.getRequiredFuelForPosition(mostFuelEfficientPosition);
+    console.log(`Apparently the most efficient position is ${mostFuelEfficientPosition} with ${requiredFuel} fuel`);
+}
+async function dayEight_chaoticDisplay() {
+    const inputUrl = "https://adventofcode.com/2021/day/8/input";
+    let input = await (0, input_getter_1.inputGetter)(inputUrl);
+    const signalAndDigits = new signals_and_digits_1.SignalsAndDigits(input);
+    const specificOccurences = signalAndDigits.getCountSpecificOccurences();
+    console.log(`The numbers 1, 7, 4, 8 occured ${specificOccurences} times in the second part.`);
+    const totalCount = signalAndDigits.getSumTotal();
+    console.log(`The sum off all the outputs is ${totalCount}`);
+    // 368 too low
 }
 run();

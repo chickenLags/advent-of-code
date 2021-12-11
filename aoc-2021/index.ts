@@ -1,5 +1,5 @@
 import {config} from 'dotenv';
-import {inputGetter, mapToInt, splitString} from "./helpers/input-getter";
+import {inputGetter, mapToInt, numberInputGetter, splitString} from "./helpers/input-getter";
 import {DepthIncrementCounter} from "./01-1-sonar-depth-increments";
 import {ShipNavigation} from "./02-2-navigation";
 import {PowerConsumption} from "./03-1-power-consumption";
@@ -9,6 +9,8 @@ import {Color} from "./enum/color";
 import {gridToImage, ImageRule} from "./helpers/grid-to-image";
 import {LanternFish} from "./classes/lanten-fish";
 import {FishMethod, LanterFishExcersise} from "./06-lanternfish";
+import {CrabmarineSwarm} from "./classes/crabmarine-swarm";
+import {SignalsAndDigits} from "./classes/signals-and-digits";
 
 config();
 
@@ -19,7 +21,9 @@ const run = async () => {
     // await dayThree_powerConsumption();
     // await dayFour_Bingo();
     // await dayFive_vents();
-    await daySix_lanternFish();
+    // await daySix_lanternFish();
+    // await daySeven_crabRescue();
+    await dayEight_chaoticDisplay();
 }
 
 async function DayOne_depthCalculations() {
@@ -73,21 +77,12 @@ async function dayFive_vents(){
     rules.push(new ImageRule(vents.grid.isSegment, Color.WHITE));
 
     gridToImage('vents', vents.grid, rules);
-
-    // 21908 - too high
-    // 10368 - too low
-    // 21350 - too low
-    // 21373 - correcto
-
 }
 
 
 async function daySix_lanternFish() {
     const inputUrl = "https://adventofcode.com/2021/day/6/input";
-    let dataStringed: string[] = await inputGetter(inputUrl);
-    dataStringed = splitString(dataStringed[0]);
-
-    const lanternFishBirthCountdowns: number[] = mapToInt(dataStringed);
+    const lanternFishBirthCountdowns: number[] = await numberInputGetter(inputUrl);
 
     let lanternFishes: LanternFish[] = lanternFishBirthCountdowns.map(birthCountdown => new LanternFish(birthCountdown));
 
@@ -99,6 +94,25 @@ async function daySix_lanternFish() {
     lanternFishExcersise.printStatus();
 }
 
+async function daySeven_crabRescue() {
+    const inputUrl = "https://adventofcode.com/2021/day/7/input";
+    let crabPositions: number[] = await numberInputGetter(inputUrl);
 
+    const crabmarineSwarm: CrabmarineSwarm = new CrabmarineSwarm(crabPositions);
+    let mostFuelEfficientPosition = crabmarineSwarm.getMostFuelEfficientPosition();
+    let requiredFuel = crabmarineSwarm.getRequiredFuelForPosition(mostFuelEfficientPosition);
+
+    console.log(`Apparently the most efficient position is ${mostFuelEfficientPosition} with ${requiredFuel} fuel`);
+}
+
+async function dayEight_chaoticDisplay() {
+    const inputUrl = "https://adventofcode.com/2021/day/8/input";
+    let input: string[] = await inputGetter(inputUrl);
+
+    const signalAndDigits: SignalsAndDigits = new SignalsAndDigits(input);
+
+    console.log(`The numbers 1, 7, 4, 8 occured ${signalAndDigits.getCountSpecificOccurences()} times in the second part.`);
+    console.log(`The sum off all the outputs is ${signalAndDigits.getSumTotal()}`);
+}
 
 run();

@@ -19,5 +19,10 @@ function mapToInt(input: string[]): number[] {
     return input.map(i => parseInt(i, 10))
 }
 
+async function numberInputGetter(inputUrl: string) {
+    let dataStringed: string[] = await inputGetter(inputUrl);
+    dataStringed = splitString(dataStringed[0]);
+    return mapToInt(dataStringed);
+}
 
-export {inputGetter, mapToInt, splitString};
+export {inputGetter, mapToInt, splitString, numberInputGetter};

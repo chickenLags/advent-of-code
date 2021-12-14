@@ -23,11 +23,18 @@ class Grid {
     }
 
     increment(x:number, y: number) {
-        try {
-            this.grid[x][y] += 1;
-        } catch (e) {
-            throw new Error(`failed incrementing grid at (${x}, ${y}). Grid has dimensions width: ${this.width} and height: ${this.height}`)
+        if (!this.inBounds(x, y)) {
+            if (this.outOfBoundsValue === -1)
+                throw new Error(`setValue() failed because Coordinage (${x}, ${y}) was out of bounds of grid ${this.width}x${this.height}.`);
+            else
+                return;
         }
+
+        this.grid[x][y] += 1;
+    }
+
+    incrementPoint(point: Coordinate) {
+        this.increment(point.x, point.y);
     }
 
     getIntersections() {
@@ -70,8 +77,12 @@ class Grid {
 
     setValue(x: number, y: number, value: number) {
         if (!this.inBounds(x, y)) {
-            throw new Error(`setValue() failed because Coordinage (${x}, ${y}) was out of bounds of grid ${this.width}x${this.height}.`);
+            if (this.outOfBoundsValue === -1)
+                throw new Error(`setValue() failed because Coordinage (${x}, ${y}) was out of bounds of grid ${this.width}x${this.height}.`);
+            else
+                return;
         }
+
         this.grid[x][y] = value;
     }
 
@@ -100,7 +111,41 @@ class Grid {
         let right = this.getValue(point.x+1, point.y);
         let above = this.getValue(point.x, point.y-1);
         let below = this.getValue(point.x, point.y+1);
+
         return [left, right, above, below];
+    }
+
+    getDiagonalValues(point: Coordinate) {
+        let lt = this.getValue(point.x-1, point.y-1);
+        let rt = this.getValue(point.x+1, point.y-1);
+        let lb = this.getValue(point.x-1, point.y+1);
+        let rb = this.getValue(point.x+1, point.y+1);
+
+        return [lt, rt, lb, rb]
+    }
+
+    getDiagonalCoordinates(point: Coordinate) {
+        let lt = new Coordinate(point.x-1, point.y-1);
+        let rt = new Coordinate(point.x+1, point.y-1);
+        let lb = new Coordinate(point.x-1, point.y+1);
+        let rb = new Coordinate(point.x+1, point.y+1);
+
+        return [lt, rt, lb, rb]
+    }
+
+    getHorizontalCoordinates(point: Coordinate) {
+        let left = new Coordinate(point.x-1, point.y);
+        let right = new Coordinate(point.x+1, point.y);
+        let above = new Coordinate(point.x, point.y-1);
+        let below = new Coordinate(point.x, point.y+1);
+
+        return [left, right, above, below];
+    }
+
+
+
+    getAllNeighbours(point: Coordinate): Coordinate[] {
+        return [...this.getDiagonalCoordinates(point), ...this.getHorizontalCoordinates(point)];
     }
 }
 

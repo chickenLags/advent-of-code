@@ -13,6 +13,7 @@ import {CrabmarineSwarm} from "./classes/crabmarine-swarm";
 import {SignalsAndDigits} from "./classes/signals-and-digits";
 import {LowPointCavern} from "./classes/low-point-cavern";
 import {NavigationSyntaxRepository} from "./classes/navigation-syntax-repository";
+import {FlashingOctopuses} from "./classes/flashing-octopuses";
 
 config();
 
@@ -137,6 +138,26 @@ async function dayTen_navigationError() {
     const navigationSyntaxRepository: NavigationSyntaxRepository = new NavigationSyntaxRepository(input);
     console.log(`Total error score is ${navigationSyntaxRepository.getTotalErrorScore()}`);
     console.log(`Total completion score is ${navigationSyntaxRepository.getCompletionScore()}`);
+}
+
+async function dayEleven_flashingOctopuses() {
+    let input: string[] = await inputGetter("https://adventofcode.com/2021/day/11/input");
+    let testInput: string[] =[
+        "5483143223",
+        "2745854711",
+        "5264556173",
+        "6141336146",
+        "6357385478",
+        "4167524645",
+        "2176841721",
+        "6882881134",
+        "4846848554",
+        "5283751526"
+    ]
+
+    const flashingOctopuses: FlashingOctopuses = new FlashingOctopuses(testInput);
+
+    console.log(`After 100 steps, there have been a total of ${flashingOctopuses.getFlashesAfterSteps(100)} flashes.`);
 }
 
 run();

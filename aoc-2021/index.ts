@@ -28,7 +28,8 @@ const run = async () => {
     // await daySeven_crabRescue();
     // await dayEight_chaoticDisplay();
     // await dayNine_lowPointsCavern();
-    await dayTen_navigationError();
+    // await dayTen_navigationError();
+    await dayEleven_flashingOctopuses();
 
 }
 
@@ -155,9 +156,10 @@ async function dayEleven_flashingOctopuses() {
         "5283751526"
     ]
 
-    const flashingOctopuses: FlashingOctopuses = new FlashingOctopuses(testInput);
+    const flashingOctopuses: FlashingOctopuses = new FlashingOctopuses(input);
 
-    console.log(`After 100 steps, there have been a total of ${flashingOctopuses.getFlashesAfterSteps(100)} flashes.`);
+    // console.log(`After 100 steps, there have been a total of ${flashingOctopuses.getFlashesAfterSteps(100)} flashes.`);
+    console.log(`At step ${flashingOctopuses.getFirstSynchronicStep()} all octopuses flash at the same time.`);
 }
 
 run();

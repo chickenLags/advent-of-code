@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Grid = void 0;
+const coordinate_1 = require("./coordinate");
 class Grid {
     constructor(width, height, outOfBoundsValue, defaultValue = 0) {
         this.grid = [];
@@ -23,12 +24,18 @@ class Grid {
         }
     }
     increment(x, y) {
-        try {
-            this.grid[x][y] += 1;
+        if (!this.inBounds(x, y)) {
+            if (this.outOfBoundsValue === -1) {
+                throw new Error(`setValue() failed because Coordinage (${x}, ${y}) was out of bounds of grid ${this.width}x${this.height}.`);
+            }
+            else {
+                return;
+            }
         }
-        catch (e) {
-            throw new Error(`failed incrementing grid at (${x}, ${y}). Grid has dimensions width: ${this.width} and height: ${this.height}`);
-        }
+        this.grid[x][y] += 1;
+    }
+    incrementPoint(point) {
+        this.increment(point.x, point.y);
     }
     getIntersections() {
         let intersections = 0;
@@ -63,7 +70,10 @@ class Grid {
     }
     setValue(x, y, value) {
         if (!this.inBounds(x, y)) {
-            throw new Error(`setValue() failed because Coordinage (${x}, ${y}) was out of bounds of grid ${this.width}x${this.height}.`);
+            if (this.outOfBoundsValue === -1)
+                throw new Error(`setValue() failed because Coordinage (${x}, ${y}) was out of bounds of grid ${this.width}x${this.height}.`);
+            else
+                return;
         }
         this.grid[x][y] = value;
     }
@@ -82,6 +92,35 @@ class Grid {
         let above = this.getValue(point.x, point.y - 1);
         let below = this.getValue(point.x, point.y + 1);
         return [left, right, above, below];
+    }
+    getDiagonalValues(point) {
+        let lt = this.getValue(point.x - 1, point.y - 1);
+        let rt = this.getValue(point.x + 1, point.y - 1);
+        let lb = this.getValue(point.x - 1, point.y + 1);
+        let rb = this.getValue(point.x + 1, point.y + 1);
+        return [lt, rt, lb, rb];
+    }
+    getDiagonalCoordinates(point) {
+        let lt = new coordinate_1.Coordinate(point.x - 1, point.y - 1);
+        let rt = new coordinate_1.Coordinate(point.x + 1, point.y - 1);
+        let lb = new coordinate_1.Coordinate(point.x - 1, point.y + 1);
+        let rb = new coordinate_1.Coordinate(point.x + 1, point.y + 1);
+        return [lt, rt, lb, rb];
+    }
+    getHorizontalCoordinates(point) {
+        let left = new coordinate_1.Coordinate(point.x - 1, point.y);
+        let right = new coordinate_1.Coordinate(point.x + 1, point.y);
+        let above = new coordinate_1.Coordinate(point.x, point.y - 1);
+        let below = new coordinate_1.Coordinate(point.x, point.y + 1);
+        return [left, right, above, below];
+    }
+    getAllNeighbours(point) {
+        return [...this.getDiagonalCoordinates(point), ...this.getHorizontalCoordinates(point)];
+    }
+    print() {
+        for (let row of this.grid) {
+            console.log(row.join('').toString());
+        }
     }
 }
 exports.Grid = Grid;

@@ -24,10 +24,12 @@ class Grid {
 
     increment(x:number, y: number) {
         if (!this.inBounds(x, y)) {
-            if (this.outOfBoundsValue === -1)
+            if (this.outOfBoundsValue === -1) {
                 throw new Error(`setValue() failed because Coordinage (${x}, ${y}) was out of bounds of grid ${this.width}x${this.height}.`);
-            else
+            }
+            else {
                 return;
+            }
         }
 
         this.grid[x][y] += 1;
@@ -146,6 +148,14 @@ class Grid {
 
     getAllNeighbours(point: Coordinate): Coordinate[] {
         return [...this.getDiagonalCoordinates(point), ...this.getHorizontalCoordinates(point)];
+    }
+
+    print() {
+        for (let row of this.grid) {
+
+            console.log(row.join('').toString());
+        }
+        console.log('');
     }
 }
 

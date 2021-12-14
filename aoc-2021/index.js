@@ -15,6 +15,7 @@ const crabmarine_swarm_1 = require("./classes/crabmarine-swarm");
 const signals_and_digits_1 = require("./classes/signals-and-digits");
 const low_point_cavern_1 = require("./classes/low-point-cavern");
 const navigation_syntax_repository_1 = require("./classes/navigation-syntax-repository");
+const flashing_octopuses_1 = require("./classes/flashing-octopuses");
 (0, dotenv_1.config)();
 const run = async () => {
     // await DayOne_depthCalculations();
@@ -26,7 +27,8 @@ const run = async () => {
     // await daySeven_crabRescue();
     // await dayEight_chaoticDisplay();
     // await dayNine_lowPointsCavern();
-    await dayTen_navigationError();
+    // await dayTen_navigationError();
+    await dayEleven_flashingOctopuses();
 };
 async function DayOne_depthCalculations() {
     const inputDay1aUrl = "https://adventofcode.com/2021/day/1/input";
@@ -105,5 +107,23 @@ async function dayTen_navigationError() {
     const navigationSyntaxRepository = new navigation_syntax_repository_1.NavigationSyntaxRepository(input);
     console.log(`Total error score is ${navigationSyntaxRepository.getTotalErrorScore()}`);
     console.log(`Total completion score is ${navigationSyntaxRepository.getCompletionScore()}`);
+}
+async function dayEleven_flashingOctopuses() {
+    let input = await (0, input_getter_1.inputGetter)("https://adventofcode.com/2021/day/11/input");
+    let testInput = [
+        "5483143223",
+        "2745854711",
+        "5264556173",
+        "6141336146",
+        "6357385478",
+        "4167524645",
+        "2176841721",
+        "6882881134",
+        "4846848554",
+        "5283751526"
+    ];
+    const flashingOctopuses = new flashing_octopuses_1.FlashingOctopuses(input);
+    // console.log(`After 100 steps, there have been a total of ${flashingOctopuses.getFlashesAfterSteps(100)} flashes.`);
+    console.log(`At step ${flashingOctopuses.getFirstSynchronicStep()} all octopuses flash at the same time.`);
 }
 run();

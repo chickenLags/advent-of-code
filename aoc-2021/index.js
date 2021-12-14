@@ -14,6 +14,7 @@ const _06_lanternfish_1 = require("./06-lanternfish");
 const crabmarine_swarm_1 = require("./classes/crabmarine-swarm");
 const signals_and_digits_1 = require("./classes/signals-and-digits");
 const low_point_cavern_1 = require("./classes/low-point-cavern");
+const navigation_syntax_repository_1 = require("./classes/navigation-syntax-repository");
 (0, dotenv_1.config)();
 const run = async () => {
     // await DayOne_depthCalculations();
@@ -24,7 +25,8 @@ const run = async () => {
     // await daySix_lanternFish();
     // await daySeven_crabRescue();
     // await dayEight_chaoticDisplay();
-    await dayNine_lowPointsCavern();
+    // await dayNine_lowPointsCavern();
+    await dayTen_navigationError();
 };
 async function DayOne_depthCalculations() {
     const inputDay1aUrl = "https://adventofcode.com/2021/day/1/input";
@@ -96,5 +98,12 @@ async function dayNine_lowPointsCavern() {
     const lowPointCavern = new low_point_cavern_1.LowPointCavern(input);
     console.log(`The sum of risk in the cavern is ${lowPointCavern.getSumRiskPoints()}`);
     console.log(`The product of the biggest basins in the cavern is ${lowPointCavern.getBiggestBasinProduct()}`);
+}
+async function dayTen_navigationError() {
+    const inputUrl = "https://adventofcode.com/2021/day/10/input";
+    let input = await (0, input_getter_1.inputGetter)(inputUrl);
+    const navigationSyntaxRepository = new navigation_syntax_repository_1.NavigationSyntaxRepository(input);
+    console.log(`Total error score is ${navigationSyntaxRepository.getTotalErrorScore()}`);
+    console.log(`Total completion score is ${navigationSyntaxRepository.getCompletionScore()}`);
 }
 run();

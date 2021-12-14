@@ -11,10 +11,18 @@ function stringDifference(first, second) {
     return arrayDifference(first.split(''), second.split(''));
 }
 exports.stringDifference = stringDifference;
+/*
+* this difference only looks at what is different in the first array
+* compared to the second. to find all differences look at arrayDifference().
+* */
 function exclusiveArrayDifference(first, second) {
     return first.filter(a => !second.includes(a)) || 'z';
 }
 exports.exclusiveArrayDifference = exclusiveArrayDifference;
+/*
+* this difference only looks at what is different in the first string
+* compared to the second. to find all differences look at arrayDifference().
+* */
 function exclusiveStringDifference(first, second) {
     return exclusiveArrayDifference(first.split(''), second.split(''));
 }

@@ -15,7 +15,7 @@ class HydrothermalVents {
     constructor(input: string[]) {
         this.raw = input;
         this.setCoords();
-        this.grid = new Grid(this.getHighestXCoord(), this.getHighestYCoord());
+        this.grid = new Grid(this.getHighestXCoord(), this.getHighestYCoord(), -1);
         this.initializeLineSegments();
     }
 

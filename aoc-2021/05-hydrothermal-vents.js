@@ -13,7 +13,7 @@ class HydrothermalVents {
         this.intersections = 0;
         this.raw = input;
         this.setCoords();
-        this.grid = new grid_1.Grid(this.getHighestXCoord(), this.getHighestYCoord());
+        this.grid = new grid_1.Grid(this.getHighestXCoord(), this.getHighestYCoord(), -1);
         this.initializeLineSegments();
     }
     run() {

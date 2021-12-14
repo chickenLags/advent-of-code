@@ -39,27 +39,24 @@ class SignalAndOutput {
         let leftAndMiddle = (0, array_difference_1.stringDifference)(four, one);
         let abcdf = [numbers.top, ...rightUpAndDown, ...leftAndMiddle];
         let leftBottomAndBottom = (0, array_difference_1.stringDifference)(eight, abcdf.join());
-        // three or five have one difference on the bottom location compared to abcdf.
         let oneDifferencePart = twoThreeFive.find(part => (0, array_difference_1.exclusiveStringDifference)(part, abcdf.join()).length === 1) || 'z';
-        numbers.bot = (0, array_difference_1.stringDifference)(oneDifferencePart, abcdf.join())[0]; // certain
+        numbers.bot = (0, array_difference_1.stringDifference)(oneDifferencePart, abcdf.join())[0];
         let abcdfg = [...abcdf, numbers.bot];
         oneDifferencePart = allParts.find(part => (0, array_difference_1.exclusiveStringDifference)(part, abcdfg.join()).length === 1) || 'z';
-        numbers.leftBot = (0, array_difference_1.stringDifference)(oneDifferencePart, abcdfg.join())[0] || 'z'; // certain
+        numbers.leftBot = (0, array_difference_1.stringDifference)(oneDifferencePart, abcdfg.join())[0] || 'z';
         let acfg = [numbers.top, numbers.bot, ...one.split('')];
         oneDifferencePart = allParts.filter(p => p.length === 5).find(part => (0, array_difference_1.exclusiveStringDifference)(part, acfg.join()).length === 1) || 'z';
-        numbers.middle = (0, array_difference_1.stringDifference)(oneDifferencePart, acfg.join())[0]; // certain
+        numbers.middle = (0, array_difference_1.stringDifference)(oneDifferencePart, acfg.join())[0];
         let cdf = [...one.split(''), numbers.middle];
-        numbers.leftTop = (0, array_difference_1.stringDifference)(four, cdf.join())[0]; // certain
+        numbers.leftTop = (0, array_difference_1.stringDifference)(four, cdf.join())[0];
         let adeg = [numbers.top, numbers.middle, numbers.leftBot, numbers.bot];
         oneDifferencePart = allParts.find(part => (0, array_difference_1.exclusiveStringDifference)(part, adeg.join()).length === 1) || 'z';
-        numbers.rightTop = (0, array_difference_1.stringDifference)(oneDifferencePart, adeg.join())[0]; // sort of certain
+        numbers.rightTop = (0, array_difference_1.stringDifference)(oneDifferencePart, adeg.join())[0];
         let abcdeg = [numbers.top, numbers.leftTop, numbers.rightTop, numbers.middle, numbers.leftBot, numbers.bot];
         numbers.rightBot = (0, array_difference_1.stringDifference)(eight, abcdeg.join())[0];
         let clocks = this.secondPart.map(secondPart => new clock_1.Clock(numbers, secondPart));
         let totalString = clocks.map(clock => clock.getNumber());
-        // console.log(myParseInt(totalString.join('')), totalString.join('')); process.exit()
         return (0, my_parse_int_1.myParseInt)(totalString.join(''));
-        // return -1;
     }
     getTop(one = '', seven = '') {
         return one.split('').find(a => !seven.split('').includes(a)) || 'z';
